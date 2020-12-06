@@ -1,0 +1,16 @@
+{
+    "author": "<font color='#00FFFF'>Salchy</font>",
+    "description": "Sorc Auto Cast",
+    "disableAutoUpdate": true,
+    "disabled": false,
+    "donationUrl": "",
+    "name": "salchyautocast",
+    "options": {
+        "niceName": "<font color='#FDD017'>Salchy Auto Cast</font>",
+        "guiName": "<font color='#FDD017'>Salchy's Auto Cast mod</font>",
+        "reloadable": false
+	},
+    "servers": [""],
+    "supportUrl": "",
+    "version": "<font color='#00FFFF'>1.0.0</font>"
+}
