@@ -18,6 +18,7 @@ module.exports = function SalchyAutoCast(script) {
 	let bosses = [];
 	let people = [];
 	let party = [];
+	let targets_to_lock = [];
 	let targetcast;
 	let aimloc;
 	let targeted = false;
@@ -109,17 +110,19 @@ module.exports = function SalchyAutoCast(script) {
 			let sInfo = getSkillInfo(packet.skill.id);
 				for (let s = 0; s < skills.length; s++) {
 					if (skills[s].group == sInfo.group && skills[s].job == job && skills[s].enabled) {
-						let max_targets = skills[s].max_targets;
-						let max_distance = skills[s].max_distance;
+						let max_targets = Number(skills[s].max_targets);
+						let max_distance = Number(skills[s].max_distance);
+						console.log(max_targets)
 						script.toServer('C_START_SKILL', 7, packet);
-						let targets_to_lock = [];
+						targets_to_lock = [];
 						if (targeted && (aimloc.dist3D(myPosition) / 25) <= max_distance ) targets_to_lock.push({ gameId: targetcast })
 						if(pvp){
 							for (let i = 0, n = people.length; i < n; i++) {
 								if ((people[i].loc.dist3D(myPosition) / 25) > max_distance ) continue;
 								if (people[i].gameId == targetcast) continue;
 								targets_to_lock.push({ gameId: people[i].gameId });
-								if(targets_to_lock.lenght == max_targets) break;
+								console.log(targets_to_lock.length)
+								if(targets_to_lock.length == max_targets) break;
 							}
 							if (targets_to_lock.length > 0) {
 								for (let i = 0, n = targets_to_lock.length; i < n; i++) {
@@ -134,7 +137,7 @@ module.exports = function SalchyAutoCast(script) {
 								if ((monsters[i].loc.dist3D(myPosition) / 25) > max_distance ) continue;
 								if (monsters[i].gameId == targetcast) continue;
 								targets_to_lock.push({ gameId: monsters[i].gameId });
-								if(targets_to_lock.lenght == max_targets) break;
+								if(targets_to_lock.length == max_targets) break;
 							}
 							if (targets_to_lock.length > 0) {
 								for (let i = 0, n = targets_to_lock.length; i < n; i++) {
@@ -473,7 +476,7 @@ module.exports = function SalchyAutoCast(script) {
 						if ((people[i].loc.dist3D(myPosition) / 25) > cast_dist ) continue;
 						if (people[i].gameId == targetcast) continue;
 						targets_to_plague.push({ gameId: people[i].gameId })
-						if(targets_to_plague.lenght == 3) break;
+						if(targets_to_plague.length == 3) break;
 					}
 					if (targets_to_plague.length > 0) {
 						for (let i = 0, n = targets_to_plague.length; i < n; i++) {
@@ -547,7 +550,7 @@ module.exports = function SalchyAutoCast(script) {
 						if ((people[i].loc.dist3D(myPosition) / 25) > cast_dist ) continue;
 						if (people[i].gameId == targetcast) continue;
 						targets_to_plague.push({ gameId: people[i].gameId })
-						if(targets_to_plague.lenght == 3) break;
+						if(targets_to_plague.length == 3) break;
 					}
 					if (targets_to_plague.length > 0) {
 						for (let i = 0, n = targets_to_plague.length; i < n; i++) {
