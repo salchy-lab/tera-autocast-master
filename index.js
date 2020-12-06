@@ -112,7 +112,6 @@ module.exports = function SalchyAutoCast(script) {
 					if (skills[s].group == sInfo.group && skills[s].job == job && skills[s].enabled) {
 						let max_targets = Number(skills[s].max_targets);
 						let max_distance = Number(skills[s].max_distance);
-						console.log(max_targets)
 						script.toServer('C_START_SKILL', 7, packet);
 						targets_to_lock = [];
 						if (targeted && (aimloc.dist3D(myPosition) / 25) <= max_distance ) targets_to_lock.push({ gameId: targetcast })
@@ -121,7 +120,6 @@ module.exports = function SalchyAutoCast(script) {
 								if ((people[i].loc.dist3D(myPosition) / 25) > max_distance ) continue;
 								if (people[i].gameId == targetcast) continue;
 								targets_to_lock.push({ gameId: people[i].gameId });
-								console.log(targets_to_lock.length)
 								if(targets_to_lock.length == max_targets) break;
 							}
 							if (targets_to_lock.length > 0) {
