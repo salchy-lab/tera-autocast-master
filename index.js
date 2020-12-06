@@ -45,6 +45,14 @@ module.exports = function SalchyAutoCast(script) {
 		enabled = !enabled;
 		script.command.message(`Salchy's auto cast script is now ${(enabled) ? 'en' : 'dis'}abled.`);
 	})
+	script.command.add('castpl', () => {
+		autoplague = !autoplague;
+		script.command.message(`Salchy's auto plague  is now ${(autoplague) ? 'en' : 'dis'}abled.`);
+	})	
+	script.command.add('castpu', () => {
+		autopull = !autopull;
+		script.command.message(`Salchy's auto pull  is now ${(autopull) ? 'en' : 'dis'}abled.`);
+	})		
 	script.command.add('castpvp', () => {
 		pvp = true;
 		pve = false;
@@ -103,16 +111,9 @@ module.exports = function SalchyAutoCast(script) {
 					if (skills[s].group == sInfo.group && skills[s].job == job && skills[s].enabled) {
 						let max_targets = skills[s].max_targets;
 						let max_distance = skills[s].max_distance;
-						if (targeted && (aimloc.dist3D(myPosition) / 25) <= max_distance ) {
-							script.toServer('C_START_SKILL', 7, packet);
-							script.toServer('C_CAN_LOCKON_TARGET', 3, {
-								target: targetcast,
-								skill: packet.skill.id
-							});
-							
-						}
-						if(!targeted) max_targets = max_targets + 1;
+						script.toServer('C_START_SKILL', 7, packet);
 						let targets_to_lock = [];
+						if (targeted && (aimloc.dist3D(myPosition) / 25) <= max_distance ) targets_to_lock.push({ gameId: targetcast })
 						if(pvp){
 							for (let i = 0, n = people.length; i < n; i++) {
 								if ((people[i].loc.dist3D(myPosition) / 25) > max_distance ) continue;
